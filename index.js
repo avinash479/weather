@@ -34,10 +34,10 @@ async function fetchData(cityName) {
 
         // Update "Weather of Other Cities" table with the latest searched city
         // const tableRows = document.querySelectorAll('.table tbody tr');
-        let cityFound = false;
+        // let cityFound = false;
 
 
-        console.log(result);
+        // console.log(result);
     } catch (error) {
         console.error(error);
     }
