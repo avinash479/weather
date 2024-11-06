@@ -1,27 +1,42 @@
 async function fetchData(cityName) {
-    const url = 'https://weather-by-api-ninjas.p.rapidapi.com/v1/weather?city=' + cityName;
+    const url = 'https://weather-api138.p.rapidapi.com/weather?city_name=' + cityName;
     const options = {
         method: 'GET',
         headers: {
-            'X-RapidAPI-Key': '0c8173e266mshbc61abbf90c7bcap1398b3jsn0857259dc4a8',
-            'X-RapidAPI-Host': 'weather-by-api-ninjas.p.rapidapi.com'
+            'x-rapidapi-key': 'db29f73903msh5568417ac8e3ec2p11a9d2jsn9c7f9261b8e8',
+            'x-rapidapi-host': 'weather-api138.p.rapidapi.com'
         }
     };
 
     try {
         const response = await fetch(url, options);
         const result = await response.json();
+
+        // Convert temperature from Fahrenheit to Celsius
+        // console.log(result);
+        const tempCelsius = (result.main.temp-273.15).toFixed(2);
+        const feelsLikeCelsius = (result.main.feels_like - 273.15).toFixed(2);
+        const minTempCelsius = (result.main.temp_min - 273.15).toFixed(2);
+        const maxTempCelsius = (result.main.temp_max - 273.15).toFixed(2);
+
+        // Update main weather details
         document.getElementById('cityName').textContent = cityName;
-        document.getElementById('cloud_pct').innerHTML = result.cloud_pct;
-        document.getElementById('temp').innerHTML = result.temp;
-        document.getElementById('feels_like').innerHTML = result.feels_like;
-        document.getElementById('humidity').innerHTML = result.humidity;
-        document.getElementById('min_temp').innerHTML = result.min_temp;
-        document.getElementById('max_temp').innerHTML = result.max_temp;
-        document.getElementById('wind_speed').innerHTML = result.wind_speed;
-        document.getElementById('wind_degrees').innerHTML = result.wind_degrees;
-        document.getElementById('sunrise').innerHTML = result.sunrise;
-        document.getElementById('sunset').innerHTML = result.sunset;
+        document.getElementById('description').innerHTML = result.weather[0].main;
+        document.getElementById('temp').innerHTML = tempCelsius;
+        document.getElementById('feels_like').innerHTML = feelsLikeCelsius + "°C";
+        document.getElementById('humidity').innerHTML = result.main.humidity;
+        document.getElementById('min_temp').innerHTML = minTempCelsius + "°C";
+        document.getElementById('max_temp').innerHTML = maxTempCelsius + "°C";
+        document.getElementById('wind_speed').innerHTML = result.wind.speed;
+        document.getElementById('wind_degrees').innerHTML = result.wind.deg;
+        document.getElementById('sunrise').innerHTML = result.sys.sunrise;
+        document.getElementById('sunset').innerHTML = result.sys.sunset;
+
+        // Update "Weather of Other Cities" table with the latest searched city
+        // const tableRows = document.querySelectorAll('.table tbody tr');
+        let cityFound = false;
+
+
         console.log(result);
     } catch (error) {
         console.error(error);
@@ -31,46 +46,54 @@ async function fetchData(cityName) {
 // Call the async function initially with a default city
 fetchData("hyderabad");
 
+
+
+async function data(cityname)
+{
+    const url = 'https://weather-api138.p.rapidapi.com/weather?city_name=' + cityname;
+    const options = {
+        method: 'GET',
+        headers: {
+            'x-rapidapi-key': 'db29f73903msh5568417ac8e3ec2p11a9d2jsn9c7f9261b8e8',
+            'x-rapidapi-host': 'weather-api138.p.rapidapi.com'
+        }
+    };
+    console.log(cityname);
+    try {
+        const response = await fetch(url, options);
+        const result = await response.json();
+        // console.log(result);
+        return result;
+    }catch(error)
+    {
+        console.log(error);
+    }
+    return null;
+}
+
+async function table_values() {
+    // console.log("1");
+    const tableRows = document.querySelectorAll('.table tbody tr');
+    for (const row of tableRows) {
+        const cityNameCell = row.querySelector('th');
+        const result = await data(cityNameCell.textContent.trim().toLowerCase());  // Await the result here
+        console.log(result);
+        // Now you can safely access the properties of 'result'
+        if (result && result.main) {
+            const cells = row.querySelectorAll('td');
+            cells[0].innerHTML = (result.main.temp - 273.15).toFixed(2);  // Temperature
+            cells[1].innerHTML = result.main.humidity;  // Humidity
+            cells[2].innerHTML = result.wind.deg;  // Wind Degrees
+            cells[3].innerHTML = result.wind.speed;  // Wind Speed
+        }
+        console.log("1");
+    }
+}
+
+table_values()
 // Add event listener to the form for submitting city
 document.getElementById("cityForm").addEventListener("submit", (e) => {
     e.preventDefault();
     const cityValue = document.getElementById("city").value;
     fetchData(cityValue);
 });
-
-async function table_values(city) {
-    const url = 'https://weather-by-api-ninjas.p.rapidapi.com/v1/weather?city=' + city;
-    const options = {
-        method: 'GET',
-        headers: {
-            'X-RapidAPI-Key': '0c8173e266mshbc61abbf90c7bcap1398b3jsn0857259dc4a8',
-            'X-RapidAPI-Host': 'weather-by-api-ninjas.p.rapidapi.com'
-        }
-    };
-    try {
-        const response = await fetch(url, options);
-        const result = await response.json();
-        
-        const tableRows = document.querySelectorAll('.table tbody tr');
-        tableRows.forEach(row => {
-            const cityNameCell = row.querySelector('th');
-            if (cityNameCell.textContent.trim().toLowerCase() === city.toLowerCase()) {
-                const cells = row.querySelectorAll('td');
-                cells[0].innerHTML = result.temp; // Temperature
-                cells[1].innerHTML = result.humidity; // Humidity
-                cells[2].innerHTML = result.wind_degrees;
-                cells[3].innerHTML = result.wind_speed;
-                // You can update other cells similarly based on the API response
-            }
-        });
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-table_values("Mumbai");
-table_values("Kolkata");
-table_values("ooty");
-table_values("Visakhapatnam");
-table_values("chennai");
-table_values("Thiruvananthapuram");
