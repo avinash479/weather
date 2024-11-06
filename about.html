@@ -1,61 +1,172 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bootstrap demo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
 </head>
+
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="index.html">Weather</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="index.html">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="about.html">AboutUs</a>
-              </li>
-            </ul>
-            <form class="d-flex" id="cityForm" role="search">
-              <input class="form-control me-2" id="city" type="search" placeholder="Enter City" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
-          </div>
-        </div>
-      </nav>
-      <div class="content">
-        This website is used to get the temperature details of any cities .<br>
-         you  can try out the below places for example 
-        <ul>
-           <li>Mumbai</li> 
-            <li>Delhi</li>
-            <li>Bangalore</li>
-            <li>Kolkata</li>
-            <li>Chennai</li>
-            <li>Hyderabad</li>
-            <li>Pune</li>
-            <li>Ahmedabad</li>
-            <li>Surat</li>
-            <li>Jaipur</li>
-            <li>Lucknow</li>
-            <li>Kanpur</li>
-            <li>Nagpur</li>
-            <li>Visakhapatnam</li>
-            <li>Indore</li>
-            <li>Thane</li>
-            <li>Bhopal</li>
-            <li>Patna</li>
-            <li>Vadodara</li>
-            <li>Ghaziabad</li>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">Weather</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">AboutUs</a>
+          </li>
         </ul>
+        <form class="d-flex" id="cityForm" role="search">
+          <input class="form-control me-2" id="city" type="search" placeholder="Enter City" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+      
       </div>
+    </div>
+  </nav>
+  <div class="row row-cols-1 row-cols-md-3 mb-3 text-center my-5 mx-5">
+    <div class="col">
+      <div class="card mb-4 rounded-3 shadow-sm">
+        <div class="card-header py-3">
+          <h4 class="my-0 fw-normal">Temperature</h4>
+        </div>
+        <div class="card-body">
+          <h1 class="card-title pricing-card-title"><span id="temp"></span><small
+              class="text-body-secondary fw-light"> 
+              <span>&#8451;</span></small></h1>
+          <ul class="list-unstyled mt-3 mb-4">
+            <li>City:<span id="cityName"></span></li>
+            <li>Min_Temperature:<span id="min_temp"></span></li>
+            <li>Max_Temperature:<span id="max_temp"></span></li>
+          </ul>
+          <!-- <button type="button" class="w-100 btn btn-lg btn-outline-primary">Sign up for free</button> -->
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card mb-4 rounded-3 shadow-sm">
+        <div class="card-header py-3">
+          <h4 class="my-0 fw-normal">Humidity</h4>
+        </div>
+        <div class="card-body">
+          <h1 class="card-title pricing-card-title"><span id=humidity></span><small
+              class="text-body-secondary fw-light"><i class="fa-light fa-percent fa-sm"></i></small></h1>
+          <ul class="list-unstyled mt-3 mb-4">
+            <li>Description:<span id="description"></span></li>
+            <!-- <li>Temp:<span id="temp"></span></li> -->
+            <li>Feels Like:<span id="feels_like"></span></li>
+            <!-- <li>Humidity:<span id=humidity></span></li> -->
+          </ul>
+          <!-- <button type="button" class="w-100 btn btn-lg btn-primary">Get started</button> -->
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card mb-4 rounded-3 shadow-sm border-primary">
+        <div class="card-header py-3 text-bg-primary border-primary">
+          <h4 class="my-0 fw-normal">Wind info</h4>
+        </div>
+        <div class="card-body">
+          <h1 class="card-title pricing-card-title"><span id="wind_speed"></span><small
+              class="text-body-secondary fw-light"></small></h1>
+          <ul class="list-unstyled mt-3 mb-4">
+            <li>Wind_Degree:<span id="wind_degrees"></span></li>
+            <li>Sunrise :<span id="sunrise"></span></li>
+            <li>Sunset:<span id="sunset"></span></li>
+            <!-- <li>Help center access</li> -->
+          </ul>
+          <!-- <button type="button" class="w-100 btn btn-lg btn-primary">Contact us</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <h2 class="display-6 text-center mb-4">Weather Details Of Other Cities
+  </h2>
+  <div class="table-responsive">
+    <table class="table text-center">
+      <thead>
+        <tr>
+          <th style="width: 34%;"></th>
+          <th style="width: 22%;" class="tem">Temperature</th>
+          <th style="width: 22%;" class="hum">Humidity</th>
+          <th style="width: 22%;" class=" press">Wind_Degree</th>
+          <th style="width: 22%;" class="wind">Wind_Speed</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row" class="text-start" >Mumbai</th>
+          <td>32</td>
+          <td>74</td>
+          <td>1012</td>
+          <td>5.75</td>
+        </tr>
+        <tr>
+          <th scope="row" class="text-start" >Kolkata</th>
+
+          <td>32</td>
+          <td>74</td>
+          <td>1012</td>
+          <td>5.75</td>
+        </tr>
+      </tbody>
+
+      <tbody>
+        <tr>
+          <th scope="row" class="text-start ">Ooty</th>
+          
+          <td>32</td>
+          <td>74</td>
+          <td>1012</td>
+          <td>5.75</td>
+        </tr>
+        <tr>
+          <th scope="row" class="text-start" >Visakhapatnam</th>
+         
+          <td>32</td>
+          <td>74</td>
+          <td>1012</td>
+          <td>5.75</td>
+        </tr>
+        <tr>
+          <th scope="row" class="text-start">Chennai</th>
+        
+          <td>32</td>
+          <td>74</td>
+          <td>1012</td>
+          <td>5.75</td>
+        </tr>
+        <tr>
+          <th scope="row" class="text-start" id="Thiruvananthapuram">Thiruvananthapuram</th>
+          <td>32</td>
+          <td>74</td>
+          <td>1012</td>
+          <td>5.75</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  <script src="index.js"> </script>
 </body>
+
 </html>
