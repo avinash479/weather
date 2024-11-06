@@ -72,13 +72,13 @@ async function data(cityname)
 }
 
 async function table_values() {
-    // console.log("1");
+    // console.log("Updating table values...");
     const tableRows = document.querySelectorAll('.table tbody tr');
     for (const row of tableRows) {
         const cityNameCell = row.querySelector('th');
-        const result = await data(cityNameCell.textContent.trim().toLowerCase());  // Await the result here
-        console.log(result);
-        // Now you can safely access the properties of 'result'
+        const cityName = cityNameCell.textContent.trim().toLowerCase();
+        const result = await data(cityName);  // Await the result here
+
         if (result && result.main) {
             const cells = row.querySelectorAll('td');
             cells[0].innerHTML = (result.main.temp - 273.15).toFixed(2);  // Temperature
@@ -86,14 +86,18 @@ async function table_values() {
             cells[2].innerHTML = result.wind.deg;  // Wind Degrees
             cells[3].innerHTML = result.wind.speed;  // Wind Speed
         }
-        console.log("1");
     }
 }
 
-table_values()
-// Add event listener to the form for submitting city
+table_values();  // Call this when the page loads to populate the table
+
+
 document.getElementById("cityForm").addEventListener("submit", (e) => {
     e.preventDefault();
-    const cityValue = document.getElementById("city").value;
-    fetchData(cityValue);
+    const cityValue = document.getElementById("city").value.trim(); // Trim to remove extra spaces
+    if (cityValue) {
+        fetchData(cityValue);  // Fetch weather data for the entered city
+    } else {
+        alert("Please enter a city name.");
+    }
 });
